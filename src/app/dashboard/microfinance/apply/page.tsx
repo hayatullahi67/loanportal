@@ -128,211 +128,212 @@ export default function LoanApplyPage() {
   return (
     <DashboardLayout role="microfinance" navItems={navItems}>
       <div className="mb-8">
-        <h2 className="text-2xl lg:text-3xl font-black text-foreground tracking-tight">Guarantee Application</h2>
-        <p className="text-sm lg:text-base text-muted-foreground">Complete the form below to initiate a request.</p>
+        <h2 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight">Guarantee Application</h2>
+        <p className="text-sm sm:text-base text-muted-foreground mt-1">Complete the digital dossier to initiate a request.</p>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 lg:space-y-8 pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            <Card className="shadow-sm">
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
-                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Bank Details</CardTitle>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <Card className="shadow-sm border-none ring-1 ring-primary/5">
+              <CardHeader className="bg-accent/40 rounded-t-xl border-b py-4">
+                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">I. Institutional Origin</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="bankName" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Bank Name</FormLabel>
-                      <FormControl><Input {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Bank Name</FormLabel>
+                      <FormControl><Input className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="date" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Application Date</FormLabel>
-                      <FormControl><Input type="date" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Submission Date</FormLabel>
+                      <FormControl><Input type="date" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="state" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>State</FormLabel>
-                      <FormControl><Input placeholder="e.g. Lagos" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">State Jurisdiction</FormLabel>
+                      <FormControl><Input placeholder="e.g. Lagos" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="lga" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>LGA</FormLabel>
-                      <FormControl><Input placeholder="e.g. Ikeja" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Local Govt Area</FormLabel>
+                      <FormControl><Input placeholder="e.g. Ikeja" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm">
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
-                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Borrower Information</CardTitle>
+            <Card className="shadow-sm border-none ring-1 ring-primary/5">
+              <CardHeader className="bg-accent/40 rounded-t-xl border-b py-4">
+                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">II. Borrower Profile</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
                 <FormField control={form.control} name="borrowerName" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
-                    <FormControl><Input placeholder="Borrower's Name" {...field} /></FormControl>
-                    <FormMessage />
+                    <FormLabel className="text-xs font-bold">Full Legal Name</FormLabel>
+                    <FormControl><Input placeholder="Borrower's Name" className="h-10 text-sm" {...field} /></FormControl>
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="gender" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Gender</FormLabel>
+                      <FormLabel className="text-xs font-bold">Gender</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
+                        <FormControl><SelectTrigger className="h-10 text-sm"><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
                         <SelectContent>
                           <SelectItem value="Male">Male</SelectItem>
                           <SelectItem value="Female">Female</SelectItem>
                         </SelectContent>
                       </Select>
-                      <FormMessage />
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="phone" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl><Input placeholder="080..." {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Contact Number</FormLabel>
+                      <FormControl><Input placeholder="080..." className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
                 <FormField control={form.control} name="bvn" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>BVN (11 Digits)</FormLabel>
-                    <FormControl><Input placeholder="22233344455" maxLength={11} {...field} /></FormControl>
-                    <FormMessage />
+                    <FormLabel className="text-xs font-bold">BVN Identification (11 Digits)</FormLabel>
+                    <FormControl><Input placeholder="22233344455" maxLength={11} className="h-10 font-mono text-sm" {...field} /></FormControl>
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )} />
                 <FormField control={form.control} name="address" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Residential Address</FormLabel>
-                    <FormControl><Input placeholder="Full address" {...field} /></FormControl>
-                    <FormMessage />
+                    <FormLabel className="text-xs font-bold">Registered Residential Address</FormLabel>
+                    <FormControl><Input placeholder="Full physical address" className="h-10 text-sm" {...field} /></FormControl>
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )} />
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm">
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
-                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Project & Financials</CardTitle>
+            <Card className="shadow-sm border-none ring-1 ring-primary/5">
+              <CardHeader className="bg-accent/40 rounded-t-xl border-b py-4">
+                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">III. Project Specifications</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="loanType" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Loan Type</FormLabel>
+                      <FormLabel className="text-xs font-bold">Venture Category</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
+                        <FormControl><SelectTrigger className="h-10 text-sm"><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
                         <SelectContent>
                           <SelectItem value="Livestock">Livestock</SelectItem>
                           <SelectItem value="Crop">Crop</SelectItem>
-                          <SelectItem value="Mixed">Mixed</SelectItem>
+                          <SelectItem value="Mixed">Mixed Farming</SelectItem>
                         </SelectContent>
                       </Select>
-                      <FormMessage />
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="location" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Project Location</FormLabel>
-                      <FormControl><Input placeholder="Farm address" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Operational Location</FormLabel>
+                      <FormControl><Input placeholder="Farm coordinates or address" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
                 <FormField control={form.control} name="purpose" render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Loan Purpose</FormLabel>
-                    <FormControl><Input placeholder="Detailed purpose" {...field} /></FormControl>
-                    <FormMessage />
+                    <FormLabel className="text-xs font-bold">Strategic Purpose of Loan</FormLabel>
+                    <FormControl><Input placeholder="Detailed economic justification" className="h-10 text-sm" {...field} /></FormControl>
+                    <FormMessage className="text-[10px]" />
                   </FormItem>
                 )} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="loanAccount" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Loan Account (10 Digits)</FormLabel>
-                      <FormControl><Input placeholder="0123456789" maxLength={10} {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Loan Account Reference</FormLabel>
+                      <FormControl><Input placeholder="0123456789" maxLength={10} className="h-10 font-mono text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="amount" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Loan Amount (₦)</FormLabel>
-                      <FormControl><Input type="number" placeholder="5,000,000" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Principal Amount (₦)</FormLabel>
+                      <FormControl><Input type="number" placeholder="5,000,000" className="h-10 font-bold text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <FormField control={form.control} name="interestRate" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Rate (%)</FormLabel>
-                      <FormControl><Input type="number" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Rate (%)</FormLabel>
+                      <FormControl><Input type="number" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="tenor" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Tenor</FormLabel>
-                      <FormControl><Input placeholder="24 Mos" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Tenor</FormLabel>
+                      <FormControl><Input placeholder="24 Mos" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="facilityType" render={({ field }) => (
                     <FormItem className="col-span-2 sm:col-span-1">
-                      <FormLabel>Facility Type</FormLabel>
-                      <FormControl><Input placeholder="Term Loan" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Facility Type</FormLabel>
+                      <FormControl><Input placeholder="Term Loan" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm">
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
-                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Dates & Documents</CardTitle>
+            <Card className="shadow-sm border-none ring-1 ring-primary/5">
+              <CardHeader className="bg-accent/40 rounded-t-xl border-b py-4">
+                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">IV. Temporal Mandates</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="disbursementDate" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Disbursement Date</FormLabel>
-                      <FormControl><Input type="date" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Disbursement Effective Date</FormLabel>
+                      <FormControl><Input type="date" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="finalRepaymentDate" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Final Repayment Date</FormLabel>
-                      <FormControl><Input type="date" {...field} /></FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-bold">Maturity Date</FormLabel>
+                      <FormControl><Input type="date" className="h-10 text-sm" {...field} /></FormControl>
+                      <FormMessage className="text-[10px]" />
                     </FormItem>
                   )} />
                 </div>
-                <div className="pt-4 border-t space-y-4">
+                <div className="pt-4 border-t border-primary/5 space-y-4">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Digital Assets</p>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center text-center hover:bg-accent transition-colors cursor-pointer min-h-[100px]">
-                      <Upload className="h-5 w-5 text-primary mb-2" />
-                      <p className="text-[10px] font-bold">Passport</p>
+                    <div className="p-4 border-2 border-dashed border-primary/10 rounded-xl flex flex-col items-center justify-center text-center hover:bg-accent hover:border-primary/30 transition-all cursor-pointer min-h-[100px] group">
+                      <Upload className="h-5 w-5 text-primary/40 group-hover:text-primary mb-2 transition-colors" />
+                      <p className="text-[9px] font-black uppercase tracking-tighter text-muted-foreground group-hover:text-primary transition-colors">Passport ID</p>
                     </div>
-                    <div className="p-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center text-center hover:bg-accent transition-colors cursor-pointer min-h-[100px]">
-                      <Upload className="h-5 w-5 text-primary mb-2" />
-                      <p className="text-[10px] font-bold">Collateral</p>
+                    <div className="p-4 border-2 border-dashed border-primary/10 rounded-xl flex flex-col items-center justify-center text-center hover:bg-accent hover:border-primary/30 transition-all cursor-pointer min-h-[100px] group">
+                      <Upload className="h-5 w-5 text-primary/40 group-hover:text-primary mb-2 transition-colors" />
+                      <p className="text-[9px] font-black uppercase tracking-tighter text-muted-foreground group-hover:text-primary transition-colors">Collateral Docs</p>
                     </div>
                   </div>
                 </div>
@@ -340,9 +341,23 @@ export default function LoanApplyPage() {
             </Card>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-end gap-3 bg-white p-4 lg:p-6 rounded-xl border shadow-lg sticky bottom-4 lg:bottom-6 z-10">
-            <Button type="button" variant="outline" size="lg" className="w-full sm:w-auto" onClick={() => router.back()}>Cancel</Button>
-            <Button type="submit" size="lg" className="w-full sm:w-auto px-12 font-bold">Submit Application</Button>
+          <div className="flex flex-col sm:flex-row justify-end gap-3 bg-white/80 backdrop-blur-md p-4 sm:p-6 rounded-2xl border shadow-2xl shadow-primary/10 sticky bottom-4 sm:bottom-8 z-40">
+            <Button 
+              type="button" 
+              variant="outline" 
+              size="lg" 
+              className="w-full sm:w-auto h-12 px-8 font-bold text-xs" 
+              onClick={() => router.back()}
+            >
+              Discard Changes
+            </Button>
+            <Button 
+              type="submit" 
+              size="lg" 
+              className="w-full sm:w-auto h-12 px-12 font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20"
+            >
+              Finalize & Submit Application
+            </Button>
           </div>
         </form>
       </Form>

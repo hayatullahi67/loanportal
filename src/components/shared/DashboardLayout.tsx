@@ -48,10 +48,10 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
     <div className="flex flex-col h-full bg-white">
       <div className="p-6">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shrink-0">
             <ShieldCheck className="text-white w-6 h-6" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-primary">FinGuard</span>
+          <span className="text-xl font-bold tracking-tight text-primary truncate">FinGuard</span>
         </Link>
         <div className="mt-2">
           <Badge variant="outline" className="text-[10px] uppercase tracking-wider font-semibold opacity-70">
@@ -74,7 +74,7 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
             )}
           >
             {item.icon}
-            {item.label}
+            <span className="truncate">{item.label}</span>
           </Link>
         ))}
       </nav>
@@ -98,13 +98,13 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 bg-white border-b flex items-center justify-between px-4 lg:px-8 z-10 shrink-0">
-          <div className="flex items-center gap-4">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        <header className="h-16 bg-white border-b flex items-center justify-between px-4 lg:px-8 z-30 shrink-0">
+          <div className="flex items-center gap-2 lg:gap-4 flex-1">
             {/* Mobile Menu Toggle */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden">
+                <Button variant="ghost" size="icon" className="lg:hidden shrink-0">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -125,9 +125,14 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
                 />
               </div>
             </div>
+            
+            {/* Logo on mobile header */}
+            <div className="lg:hidden flex sm:hidden">
+               <ShieldCheck className="text-primary w-6 h-6" />
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 lg:gap-4">
+          <div className="flex items-center gap-2 lg:gap-4 shrink-0">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="relative rounded-full h-9 w-9">
@@ -135,7 +140,7 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-[10px] font-bold text-white rounded-full flex items-center justify-center">2</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80 p-0">
+              <DropdownMenuContent align="end" className="w-72 sm:w-80 p-0">
                 <DropdownMenuLabel className="p-4 bg-accent/50">Notifications</DropdownMenuLabel>
                 <div className="max-h-[300px] overflow-y-auto">
                   <div className="p-4 border-b hover:bg-accent cursor-pointer transition-colors">
@@ -151,11 +156,11 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="rounded-full flex items-center gap-3 pr-2 pl-2 lg:pl-4">
+                <Button variant="ghost" className="rounded-full flex items-center gap-2 sm:gap-3 pr-1 sm:pr-2 pl-1 lg:pl-4">
                   <div className="text-right hidden sm:block">
                     <p className="text-xs font-bold leading-none capitalize">{role.replace('-', ' ')}</p>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0">
                     <User className="w-4 h-4 text-primary" />
                   </div>
                 </Button>
@@ -172,8 +177,8 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
-          <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500">
+        <main className="flex-1 overflow-y-auto bg-[#F8FAFC]">
+          <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full animate-in fade-in slide-in-from-bottom-2 duration-500">
             {children}
           </div>
         </main>
