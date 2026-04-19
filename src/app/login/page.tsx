@@ -8,15 +8,15 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 
 export default function LoginPage() {
   const roles = [
-    { name: "Microfinance Bank", icon: <Landmark className="w-5 h-5" />, href: "/dashboard/microfinance/loans", color: "bg-blue-600" },
-    { name: "Head Office", icon: <Building2 className="w-5 h-5" />, href: "/dashboard/head-office/stamp", color: "bg-indigo-600" },
-    { name: "DFO Officer", icon: <UserCheck className="w-5 h-5" />, href: "/dashboard/dfo-officer/verify", color: "bg-emerald-600" },
-    { name: "DFO Signatory", icon: <Signature className="w-5 h-5" />, href: "/dashboard/dfo-signatory/approve", color: "bg-amber-600" },
+    { name: "Microfinance Bank", icon: <Landmark className="w-5 h-5" />, href: "/dashboard/microfinance/loans", color: "bg-primary" },
+    { name: "Head Office", icon: <Building2 className="w-5 h-5" />, href: "/dashboard/head-office/stamp", color: "bg-primary/90" },
+    { name: "DFO Officer", icon: <UserCheck className="w-5 h-5" />, href: "/dashboard/dfo-officer/verify", color: "bg-secondary" },
+    { name: "DFO Signatory", icon: <Signature className="w-5 h-5" />, href: "/dashboard/dfo-signatory/approve", color: "bg-secondary/80" },
     { name: "Global Admin", icon: <Building className="w-5 h-5" />, href: "/dashboard/admin", color: "bg-slate-800" },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-4 sm:p-6">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-primary shadow-2xl shadow-primary/30 mb-8 transform hover:scale-105 transition-transform">
@@ -26,7 +26,7 @@ export default function LoginPage() {
           <p className="text-muted-foreground mt-3 font-medium text-sm sm:text-base">Secured Loan Guarantee Ecosystem</p>
         </div>
 
-        <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-3xl overflow-hidden">
+        <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.08)] rounded-3xl overflow-hidden">
           <CardHeader className="bg-white border-b border-slate-50 p-6 sm:p-8">
             <CardTitle className="text-xl font-bold">Portal Entry</CardTitle>
             <CardDescription className="text-xs sm:text-sm">Select authorized operational module to proceed</CardDescription>
