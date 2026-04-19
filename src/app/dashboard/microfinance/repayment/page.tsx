@@ -91,7 +91,7 @@ export default function MicrofinanceRepaymentPage() {
           <CreditCard className="w-5 h-5 text-primary" /> Disbursed Loans Registry
         </h3>
         <LoanTable 
-          loans={disburnedLoans} 
+          loans={disbursedLoans} 
           onAction={handleAction} 
           actionLabel="Add Payment" 
           allowedStatus="DISBURSED"
