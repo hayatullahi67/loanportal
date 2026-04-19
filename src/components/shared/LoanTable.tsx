@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, ChevronRight } from "lucide-react";
+import { Eye } from "lucide-react";
 import { LoanApplication, STATUS_LABELS, LoanStatus } from "@/types/loan";
 import { 
   Dialog, 
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 interface LoanTableProps {
   loans: LoanApplication[];
@@ -40,20 +41,6 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
       style: 'currency',
       currency: 'NGN',
     }).format(amount);
-  };
-
-  const getStatusVariant = (status: LoanStatus) => {
-    switch (status) {
-      case 'APPROVED':
-      case 'DISBURSED':
-      case 'CERTIFICATE_GENERATED':
-        return 'default';
-      case 'AWAITING_DFO_VERIFICATION':
-      case 'AWAITING_SIGNATORY_APPROVAL':
-        return 'secondary';
-      default:
-        return 'outline';
-    }
   };
 
   return (
