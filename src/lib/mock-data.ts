@@ -80,4 +80,44 @@ export const MOCK_LOANS: LoanApplication[] = [
     ],
     repayments: [],
   },
+  {
+    id: "LN-003",
+    status: "DISBURSED",
+    bankDetails: {
+      bankName: "Green Harvest MFB",
+      state: "Kano",
+      lga: "Dala",
+      date: "2024-02-10",
+    },
+    borrower: {
+      name: "Musa Ibrahim",
+      gender: "Male",
+      phone: "08109988776",
+      address: "99 Grain Road, Kano",
+      bvn: "44455566677",
+    },
+    project: {
+      location: "Kano North Fields",
+      loanType: "Mixed",
+      purpose: "Irrigation setup and seed procurement",
+    },
+    loan: {
+      loanAccount: "1122334455",
+      amount: 10000000,
+      interestRate: 10,
+      tenor: "36 Months",
+      facilityType: "Capital Investment",
+    },
+    dates: {
+      disbursementDate: "2024-03-01",
+      finalRepaymentDate: "2027-03-01",
+    },
+    timeline: [
+      { status: "PENDING_HEAD_OFFICE_STAMP", timestamp: "2024-02-10 11:00", user: "MFB Officer" },
+      { status: "DISBURSED", timestamp: "2024-03-01 16:30", user: "HO Admin" },
+    ],
+    repayments: [
+      { id: "R-001", date: "2024-04-01", amount: 350000, status: "PAID" }
+    ],
+  },
 ];
