@@ -22,6 +22,7 @@ import {
   DialogFooter
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface LoanTableProps {
   loans: LoanApplication[];
@@ -46,7 +47,7 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
       case 'APPROVED':
       case 'DISBURSED':
       case 'CERTIFICATE_GENERATED':
-        return 'default'; // Success green in many designs, here primary or custom
+        return 'default';
       case 'AWAITING_DFO_VERIFICATION':
       case 'AWAITING_SIGNATORY_APPROVAL':
         return 'secondary';
@@ -57,57 +58,69 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
 
   return (
     <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-      <Table>
-        <TableHeader>
-          <TableRow className="bg-accent/50">
-            <TableHead className="font-bold">Loan ID</TableHead>
-            <TableHead className="font-bold">Borrower</TableHead>
-            <TableHead className="font-bold">BVN</TableHead>
-            <TableHead className="font-bold">Amount</TableHead>
-            <TableHead className="font-bold">Status</TableHead>
-            <TableHead className="font-bold text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {loans.map((loan) => (
-            <TableRow key={loan.id} className="cursor-pointer hover:bg-accent/20">
-              <TableCell className="font-mono font-bold text-primary">{loan.id}</TableCell>
-              <TableCell>{loan.borrower.name}</TableCell>
-              <TableCell className="font-mono text-muted-foreground">{loan.borrower.bvn}</TableCell>
-              <TableCell className="font-bold">{formatCurrency(loan.loan.amount)}</TableCell>
-              <TableCell>
-                <Badge variant={getStatusVariant(loan.status)} className="whitespace-nowrap">
-                  {STATUS_LABELS[loan.status]}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-right flex items-center justify-end gap-2">
-                <Button variant="ghost" size="sm" onClick={() => setSelectedLoan(loan)}>
-                  <Eye className="h-4 w-4 mr-2" /> Details
-                </Button>
-                {onAction && (
-                  <Button 
-                    size="sm"
-                    disabled={loan.status !== allowedStatus}
-                    onClick={() => onAction(loan)}
-                  >
-                    {actionLabel}
-                  </Button>
-                )}
-              </TableCell>
+      <div className="overflow-x-auto">
+        <Table className="min-w-[800px] lg:min-w-full">
+          <TableHeader>
+            <TableRow className="bg-accent/50">
+              <TableHead className="font-bold">Loan ID</TableHead>
+              <TableHead className="font-bold">Borrower</TableHead>
+              <TableHead className="hidden md:table-cell font-bold">BVN</TableHead>
+              <TableHead className="font-bold">Amount</TableHead>
+              <TableHead className="font-bold">Status</TableHead>
+              <TableHead className="font-bold text-right">Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {loans.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  No applications found.
+                </TableCell>
+              </TableRow>
+            ) : (
+              loans.map((loan) => (
+                <TableRow key={loan.id} className="cursor-pointer hover:bg-accent/20">
+                  <TableCell className="font-mono font-bold text-primary">{loan.id}</TableCell>
+                  <TableCell className="max-w-[150px] truncate">{loan.borrower.name}</TableCell>
+                  <TableCell className="hidden md:table-cell font-mono text-muted-foreground">{loan.borrower.bvn}</TableCell>
+                  <TableCell className="font-bold whitespace-nowrap">{formatCurrency(loan.loan.amount)}</TableCell>
+                  <TableCell>
+                    <Badge variant={getStatusVariant(loan.status)} className="whitespace-nowrap text-[10px] lg:text-xs">
+                      {STATUS_LABELS[loan.status]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right flex items-center justify-end gap-2">
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedLoan(loan)} className="h-8 w-8 p-0 lg:w-auto lg:px-3 lg:py-1">
+                      <Eye className="h-4 w-4 lg:mr-2" />
+                      <span className="hidden lg:inline">Details</span>
+                    </Button>
+                    {onAction && (
+                      <Button 
+                        size="sm"
+                        disabled={loan.status !== allowedStatus}
+                        onClick={() => onAction(loan)}
+                        className="h-8 text-[10px] lg:text-xs"
+                      >
+                        {actionLabel}
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       <Dialog open={!!selectedLoan} onOpenChange={() => setSelectedLoan(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-[95vw] lg:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <div className="flex justify-between items-center pr-8">
-              <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-                Loan Details: <span className="text-primary">{selectedLoan?.id}</span>
+            <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-2 lg:pr-8">
+              <DialogTitle className="text-xl lg:text-2xl font-bold flex items-center gap-2">
+                Loan: <span className="text-primary">{selectedLoan?.id}</span>
               </DialogTitle>
               {selectedLoan && (
-                <Badge variant={getStatusVariant(selectedLoan.status)}>
+                <Badge variant={getStatusVariant(selectedLoan.status)} className="w-fit">
                   {STATUS_LABELS[selectedLoan.status]}
                 </Badge>
               )}
@@ -115,7 +128,7 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
           </DialogHeader>
 
           {selectedLoan && (
-            <div className="grid grid-cols-2 gap-6 py-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
               <section className="space-y-4">
                 <div>
                   <h4 className="text-xs font-bold uppercase text-muted-foreground mb-1">Borrower Information</h4>
@@ -144,10 +157,6 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
                     <span className="text-sm text-muted-foreground">Interest Rate:</span>
                     <span className="text-sm font-semibold">{selectedLoan.loan.interestRate}%</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Tenor:</span>
-                    <span className="text-sm font-semibold">{selectedLoan.loan.tenor}</span>
-                  </div>
                   <div className="flex justify-between items-center mt-4 p-3 bg-accent/50 rounded-lg">
                     <span className="text-xs font-bold text-muted-foreground">Estimated Rebate (40%):</span>
                     <span className="text-sm font-bold text-secondary">
@@ -157,11 +166,11 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
                 </div>
                 <Separator />
                 <div>
-                  <h4 className="text-xs font-bold uppercase text-muted-foreground mb-1">Workflow Timeline</h4>
-                  <div className="space-y-2 mt-2">
+                  <h4 className="text-xs font-bold uppercase text-muted-foreground mb-1">Timeline</h4>
+                  <div className="space-y-3 mt-2">
                     {selectedLoan.timeline.map((event, idx) => (
-                      <div key={idx} className="flex gap-2 text-xs">
-                        <div className="w-1 h-auto bg-primary/20 rounded-full" />
+                      <div key={idx} className="flex gap-2 text-[10px] lg:text-xs">
+                        <div className="w-0.5 h-auto bg-primary/20 rounded-full shrink-0" />
                         <div>
                           <p className="font-bold text-foreground">{STATUS_LABELS[event.status]}</p>
                           <p className="text-muted-foreground">{event.timestamp} • {event.user}</p>
@@ -174,8 +183,8 @@ export function LoanTable({ loans, onAction, actionLabel, allowedStatus, role }:
             </div>
           )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setSelectedLoan(null)}>Close</Button>
+          <DialogFooter className="mt-4">
+            <Button variant="outline" onClick={() => setSelectedLoan(null)} className="w-full lg:w-auto">Close</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

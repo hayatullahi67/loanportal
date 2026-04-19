@@ -8,7 +8,6 @@ import { DashboardLayout } from "@/components/shared/DashboardLayout";
 import { 
   LayoutDashboard, 
   FilePlus, 
-  Files, 
   CreditCard, 
   Upload, 
   CheckCircle2,
@@ -129,19 +128,19 @@ export default function LoanApplyPage() {
   return (
     <DashboardLayout role="microfinance" navItems={navItems}>
       <div className="mb-8">
-        <h2 className="text-3xl font-black text-foreground">New Loan Guarantee Application</h2>
-        <p className="text-muted-foreground">Complete the form below to initiate a guarantee request.</p>
+        <h2 className="text-2xl lg:text-3xl font-black text-foreground tracking-tight">Guarantee Application</h2>
+        <p className="text-sm lg:text-base text-muted-foreground">Complete the form below to initiate a request.</p>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <Card>
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b mb-6">
-                <CardTitle className="text-sm font-bold uppercase tracking-widest text-primary">Bank Details</CardTitle>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 lg:space-y-8 pb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <Card className="shadow-sm">
+              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
+                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Bank Details</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="bankName" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Bank Name</FormLabel>
@@ -157,7 +156,7 @@ export default function LoanApplyPage() {
                     </FormItem>
                   )} />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="state" render={({ field }) => (
                     <FormItem>
                       <FormLabel>State</FormLabel>
@@ -176,11 +175,11 @@ export default function LoanApplyPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b mb-6">
-                <CardTitle className="text-sm font-bold uppercase tracking-widest text-primary">Borrower Information</CardTitle>
+            <Card className="shadow-sm">
+              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
+                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Borrower Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-6">
                 <FormField control={form.control} name="borrowerName" render={({ field }) => (
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
@@ -188,7 +187,7 @@ export default function LoanApplyPage() {
                     <FormMessage />
                   </FormItem>
                 )} />
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="gender" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Gender</FormLabel>
@@ -227,12 +226,12 @@ export default function LoanApplyPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b mb-6">
-                <CardTitle className="text-sm font-bold uppercase tracking-widest text-primary">Project & Financials</CardTitle>
+            <Card className="shadow-sm">
+              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
+                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Project & Financials</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="loanType" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Loan Type</FormLabel>
@@ -262,7 +261,7 @@ export default function LoanApplyPage() {
                     <FormMessage />
                   </FormItem>
                 )} />
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="loanAccount" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Loan Account (10 Digits)</FormLabel>
@@ -278,7 +277,7 @@ export default function LoanApplyPage() {
                     </FormItem>
                   )} />
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <FormField control={form.control} name="interestRate" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Rate (%)</FormLabel>
@@ -289,12 +288,12 @@ export default function LoanApplyPage() {
                   <FormField control={form.control} name="tenor" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Tenor</FormLabel>
-                      <FormControl><Input placeholder="e.g. 24 Months" {...field} /></FormControl>
+                      <FormControl><Input placeholder="24 Mos" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="facilityType" render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="col-span-2 sm:col-span-1">
                       <FormLabel>Facility Type</FormLabel>
                       <FormControl><Input placeholder="Term Loan" {...field} /></FormControl>
                       <FormMessage />
@@ -304,12 +303,12 @@ export default function LoanApplyPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="bg-accent/30 rounded-t-xl border-b mb-6">
-                <CardTitle className="text-sm font-bold uppercase tracking-widest text-primary">Dates & Documents</CardTitle>
+            <Card className="shadow-sm">
+              <CardHeader className="bg-accent/30 rounded-t-xl border-b py-4">
+                <CardTitle className="text-xs font-bold uppercase tracking-widest text-primary">Dates & Documents</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="disbursementDate" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Disbursement Date</FormLabel>
@@ -326,16 +325,14 @@ export default function LoanApplyPage() {
                   )} />
                 </div>
                 <div className="pt-4 border-t space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="flex-1 p-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center text-center hover:bg-accent transition-colors cursor-pointer">
-                      <Upload className="h-6 w-6 text-primary mb-2" />
-                      <p className="text-xs font-bold">Borrower Passport</p>
-                      <p className="text-[10px] text-muted-foreground">JPEG, PNG up to 2MB</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center text-center hover:bg-accent transition-colors cursor-pointer min-h-[100px]">
+                      <Upload className="h-5 w-5 text-primary mb-2" />
+                      <p className="text-[10px] font-bold">Passport</p>
                     </div>
-                    <div className="flex-1 p-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center text-center hover:bg-accent transition-colors cursor-pointer">
-                      <Upload className="h-6 w-6 text-primary mb-2" />
-                      <p className="text-xs font-bold">Collateral Document</p>
-                      <p className="text-[10px] text-muted-foreground">PDF up to 5MB</p>
+                    <div className="p-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center text-center hover:bg-accent transition-colors cursor-pointer min-h-[100px]">
+                      <Upload className="h-5 w-5 text-primary mb-2" />
+                      <p className="text-[10px] font-bold">Collateral</p>
                     </div>
                   </div>
                 </div>
@@ -343,9 +340,9 @@ export default function LoanApplyPage() {
             </Card>
           </div>
 
-          <div className="flex justify-end gap-4 bg-white p-6 rounded-xl border shadow-lg sticky bottom-6">
-            <Button type="button" variant="outline" size="lg" onClick={() => router.back()}>Cancel</Button>
-            <Button type="submit" size="lg" className="px-12 font-bold">Submit Application</Button>
+          <div className="flex flex-col sm:flex-row justify-end gap-3 bg-white p-4 lg:p-6 rounded-xl border shadow-lg sticky bottom-4 lg:bottom-6 z-10">
+            <Button type="button" variant="outline" size="lg" className="w-full sm:w-auto" onClick={() => router.back()}>Cancel</Button>
+            <Button type="submit" size="lg" className="w-full sm:w-auto px-12 font-bold">Submit Application</Button>
           </div>
         </form>
       </Form>
