@@ -4,6 +4,7 @@ export type LoanStatus =
   | 'AWAITING_SIGNATORY_APPROVAL'
   | 'APPROVED'
   | 'CERTIFICATE_GENERATED'
+  | 'REJECTED'
   | 'DISBURSED';
 
 export type LoanType = 'Livestock' | 'Crop' | 'Mixed';
@@ -69,10 +70,11 @@ export interface LoanApplication {
 }
 
 export const STATUS_LABELS: Record<LoanStatus, string> = {
-  PENDING_HEAD_OFFICE_STAMP: '⏳ Pending Stamp',
-  AWAITING_DFO_VERIFICATION: '🟡 Awaiting Verification',
-  AWAITING_SIGNATORY_APPROVAL: '🔵 Awaiting Approval',
-  APPROVED: '🟢 Approved',
-  CERTIFICATE_GENERATED: '🧾 Certificate Generated',
-  DISBURSED: '💰 Disbursed',
+  PENDING_HEAD_OFFICE_STAMP: 'Pending Stamp',
+  AWAITING_DFO_VERIFICATION: 'Awaiting Verification',
+  AWAITING_SIGNATORY_APPROVAL: 'Awaiting Approval',
+  APPROVED: 'Approved',
+  CERTIFICATE_GENERATED: 'Certificate Generated',
+  REJECTED: 'Rejected',
+  DISBURSED: 'Disbursed',
 };

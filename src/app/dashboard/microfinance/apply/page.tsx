@@ -133,7 +133,7 @@ export default function LoanApplyPage() {
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-24">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <Card className="shadow-sm border-none ring-1 ring-primary/5">
               <CardHeader className="bg-accent/40 rounded-t-xl border-b py-4">
@@ -264,7 +264,7 @@ export default function LoanApplyPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="loanAccount" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-xs font-bold">Loan Account Reference</FormLabel>
+                      <FormLabel className="text-xs font-bold">Account Number</FormLabel>
                       <FormControl><Input placeholder="0123456789" maxLength={10} className="h-10 font-mono text-sm" {...field} /></FormControl>
                       <FormMessage className="text-[10px]" />
                     </FormItem>
@@ -341,7 +341,7 @@ export default function LoanApplyPage() {
             </Card>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-end gap-3 bg-white/80 backdrop-blur-md p-4 sm:p-6 rounded-2xl border shadow-2xl shadow-primary/10 sticky bottom-4 sm:bottom-8 z-40">
+          <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
             <Button 
               type="button" 
               variant="outline" 

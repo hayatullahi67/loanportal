@@ -1,24 +1,48 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/shared/DashboardLayout";
 import { LoanTable } from "@/components/shared/LoanTable";
 import { useLoans } from "@/lib/store";
-import { UserCheck, Award, FileBadge } from "lucide-react";
+import { 
+  UserCheck, 
+  Award, 
+  FileBadge, 
+  ShieldCheck, 
+  ArrowUpRight, 
+  Download, 
+  Printer, 
+  X,
+  CreditCard,
+  Calendar,
+  Building2,
+  BadgeCheck
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LoanApplication } from "@/types/loan";
-import { 
-  AlertDialog, 
-  AlertDialogAction, 
-  AlertDialogCancel, 
-  AlertDialogContent, 
-  AlertDialogDescription, 
-  AlertDialogFooter, 
-  AlertDialogHeader, 
-  AlertDialogTitle 
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import Image from "next/image";
 
 export default function DfoOfficerCertificatePage() {
+  const router = useRouter();
   const { loans, updateLoanStatus } = useLoans();
   const { toast } = useToast();
   const [targetLoan, setTargetLoan] = useState<LoanApplication | null>(null);
@@ -29,7 +53,11 @@ export default function DfoOfficerCertificatePage() {
   ];
 
   const handleAction = (loan: LoanApplication) => {
-    setTargetLoan(loan);
+    if (loan.status === 'CERTIFICATE_GENERATED') {
+      router.push(`/dashboard/dfo-officer/certificate/${loan.id}`);
+    } else {
+      setTargetLoan(loan);
+    }
   };
 
   const confirmGenerate = () => {
@@ -37,43 +65,50 @@ export default function DfoOfficerCertificatePage() {
       updateLoanStatus(targetLoan.id, 'CERTIFICATE_GENERATED', 'DFO Officer');
       toast({
         title: "Certificate Generated",
-        description: `Certificate for Loan ${targetLoan.id} has been generated.`,
+        description: `Certificate for Loan ${targetLoan.id} has been securely issued.`,
       });
+      router.push(`/dashboard/dfo-officer/certificate/${targetLoan.id}`);
       setTargetLoan(null);
     }
   };
 
   return (
     <DashboardLayout role="dfo-officer" navItems={navItems}>
-      <div className="mb-8">
-        <h2 className="text-3xl font-black text-foreground">Certificate Generation</h2>
-        <p className="text-muted-foreground">Issue official guarantee certificates for approved applications.</p>
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <LoanTable 
+          loans={loans} 
+          onAction={handleAction} 
+          onPreview={(loan) => router.push(`/dashboard/dfo-officer/certificate/${loan.id}`)}
+          actionLabel="Generate Certificate" 
+          allowedStatus={['APPROVED', 'CERTIFICATE_GENERATED']}
+          role="dfo-officer"
+        />
       </div>
 
-      <LoanTable 
-        loans={loans} 
-        onAction={handleAction} 
-        actionLabel="Generate Certificate" 
-        allowedStatus="APPROVED"
-        role="dfo-officer"
-      />
-
+      {/* Confirmation Dialog */}
       <AlertDialog open={!!targetLoan} onOpenChange={() => setTargetLoan(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2 text-2xl font-black">
-              <FileBadge className="w-6 h-6 text-primary" /> Issue Certificate
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              You are about to generate the official guarantee certificate for <span className="font-bold">{targetLoan?.id}</span>. This document will be sent to the Head Office for disbursement.
-            </AlertDialogDescription>
+        <AlertDialogContent className="bg-[#001a0e] border-white/10 rounded-3xl p-8 max-w-md">
+          <AlertDialogHeader className="space-y-4">
+            <div className="w-16 h-16 bg-primary/10 rounded-2xl border border-primary/20 flex items-center justify-center mx-auto">
+               <FileBadge className="w-8 h-8 text-primary" />
+            </div>
+            <div className="text-center space-y-2">
+               <AlertDialogTitle className="text-2xl font-black text-white uppercase tracking-tighter">Issue Guarantee?</AlertDialogTitle>
+               <AlertDialogDescription className="text-white/60 text-sm font-medium">
+                 You are about to issue a formal guarantee instrument for <span className="text-white font-bold">{targetLoan?.id}</span>. This action is cryptographically recorded.
+               </AlertDialogDescription>
+            </div>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmGenerate} className="font-bold">Generate Issue</AlertDialogAction>
+          <AlertDialogFooter className="mt-8 flex gap-3">
+            <AlertDialogCancel className="flex-1 bg-white/5 border-white/10 text-white rounded-2xl h-12 font-black uppercase tracking-widest text-[10px]">Decline</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmGenerate} className="flex-1 bg-primary text-[#001a0e] hover:bg-primary/90 border-none rounded-2xl h-12 font-black uppercase tracking-widest text-[10px]">Execute & Issue</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </DashboardLayout>
   );
+}
+
+function cn(...inputs: any[]) {
+  return inputs.filter(Boolean).join(" ");
 }

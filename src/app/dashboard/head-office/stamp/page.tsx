@@ -74,28 +74,27 @@ export default function HeadOfficeStampPage() {
     <DashboardLayout role="head-office" navItems={navItems}>
       <div className="mb-8">
         <h2 className="text-3xl font-black text-foreground">Processing Center</h2>
-        <p className="text-muted-foreground">Initial validation and stamping of guarantee requests from the MFB network.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-3 space-y-6">
+      <div className=" gap-8">
+        <div className=" space-y-6">
           <div className="flex flex-col sm:flex-row gap-4">
-             <Card className="flex-1 border-none shadow-sm ring-1 ring-primary/5 bg-white">
+             <Card className="flex-1 border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">In-Queue Manifest</CardTitle>
+                  <CardTitle className="text-[10px] font-black uppercase tracking-widest text-white/40">In-Queue Manifest</CardTitle>
                 </CardHeader>
                 <CardContent className="flex items-center justify-between">
-                  <p className="text-3xl font-black text-primary">{pendingCount}</p>
-                  <Zap className="w-8 h-8 text-amber-500 opacity-20" />
+                  <p className="text-3xl font-black text-white">{pendingCount}</p>
+                  <Zap className="w-8 h-8 text-amber-400 opacity-30" />
                 </CardContent>
              </Card>
-             <Card className="flex-1 border-none shadow-sm ring-1 ring-primary/5 bg-white">
+             <Card className="flex-1 border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Avg. T-Time</CardTitle>
+                  <CardTitle className="text-[10px] font-black uppercase tracking-widest text-white/40">Avg. T-Time</CardTitle>
                 </CardHeader>
                 <CardContent className="flex items-center justify-between">
-                  <p className="text-3xl font-black text-primary">1.4h</p>
-                  <ClipboardList className="w-8 h-8 text-blue-500 opacity-20" />
+                  <p className="text-3xl font-black text-white">1.4h</p>
+                  <ClipboardList className="w-8 h-8 text-blue-400 opacity-30" />
                 </CardContent>
              </Card>
           </div>
@@ -109,7 +108,7 @@ export default function HeadOfficeStampPage() {
           />
         </div>
 
-        <div className="space-y-6">
+        {/* <div className="space-y-6">
           <Alert className="bg-primary/5 border-primary/20">
             <Info className="h-4 w-4 text-primary" />
             <AlertTitle className="text-xs font-black uppercase text-primary">Quality Control</AlertTitle>
@@ -129,7 +128,7 @@ export default function HeadOfficeStampPage() {
               <p>• Confirm repayment tenor compliance (Max 36m).</p>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
 
       <AlertDialog open={!!targetLoan} onOpenChange={() => { setTargetLoan(null); setAiSummary(null); }}>

@@ -139,11 +139,15 @@ export function DashboardLayout({ children, role, navItems }: DashboardLayoutPro
                   <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(0,209,102,0.8)]"></span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80 p-0 bg-[#001a0e] border-white/10 text-white">
+              <DropdownMenuContent 
+                align="end" 
+                sideOffset={8}
+                className= "max-sm:mx-[12px] w-80 max-w-[calc(100vw-2rem)] p-0 bg-[#001a0e] border-white/10 text-white rounded-2xl overflow-hidden shadow-2xl"
+              >
                 <DropdownMenuLabel className="p-4 bg-white/5 font-black uppercase tracking-widest text-xs">Security Notifications</DropdownMenuLabel>
                 <div className="max-h-[300px] overflow-y-auto">
                   <div className="p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors">
-                    <p className="text-sm font-black text-primary">ACTION REQUIRED</p>
+                    <p className="text-sm font-black text-primary uppercase">ACTION REQUIRED</p>
                     <p className="text-xs text-white/60 mt-1">Loan LN-001 audit report requires your biometric sign-off.</p>
                   </div>
                 </div>

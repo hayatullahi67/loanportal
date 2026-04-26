@@ -20,6 +20,9 @@ import {
 import { generateDfoOfficerVerificationSummary } from "@/ai/flows/dfo-officer-verification-summary-flow";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { XCircle } from "lucide-react";
 
 export default function DfoOfficerVerifyPage() {
   const { loans, updateLoanStatus } = useLoans();
@@ -27,6 +30,7 @@ export default function DfoOfficerVerifyPage() {
   const [targetLoan, setTargetLoan] = useState<LoanApplication | null>(null);
   const [aiSummary, setAiSummary] = useState<string | null>(null);
   const [isSummarizing, setIsSummarizing] = useState(false);
+  const [rejectionNote, setRejectionNote] = useState("");
 
   const navItems = [
     { label: "Verify Loans", href: "/dashboard/dfo-officer/verify", icon: <UserCheck className="w-4 h-4" /> },
@@ -68,9 +72,32 @@ export default function DfoOfficerVerifyPage() {
         title: "Loan Verified",
         description: `Loan ${targetLoan.id} verified and sent for signatory approval.`,
       });
-      setTargetLoan(null);
-      setAiSummary(null);
+      closeModal();
     }
+  };
+
+  const confirmReject = () => {
+    if (targetLoan && rejectionNote.trim()) {
+      updateLoanStatus(targetLoan.id, 'REJECTED', 'DFO Officer', rejectionNote);
+      toast({
+        title: "Loan Rejected",
+        description: `Loan ${targetLoan.id} has been rejected with a note.`,
+        variant: "destructive",
+      });
+      closeModal();
+    } else {
+      toast({
+        title: "Note Required",
+        description: "Please provide a reason for rejection.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const closeModal = () => {
+    setTargetLoan(null);
+    setAiSummary(null);
+    setRejectionNote("");
   };
 
   return (
@@ -80,31 +107,31 @@ export default function DfoOfficerVerifyPage() {
         <p className="text-muted-foreground">Detailed audit of applications already stamped by the Head Office.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-3 space-y-6">
+      <div className=" gap-8">
+        <div className=" space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-             <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
+             <Card className="border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
                 <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-[10px] font-black uppercase text-muted-foreground">Pending Audit</CardTitle>
+                  <CardTitle className="text-[10px] font-black uppercase text-white/40 tracking-widest">Pending Audit</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
-                   <p className="text-2xl font-black text-primary">{loans.filter(l => l.status === 'AWAITING_DFO_VERIFICATION').length}</p>
+                   <p className="text-3xl font-black text-primary">{loans.filter(l => l.status === 'AWAITING_DFO_VERIFICATION').length}</p>
                 </CardContent>
              </Card>
-             <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
+             <Card className="border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
                 <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-[10px] font-black uppercase text-muted-foreground">Site Visits Today</CardTitle>
+                  <CardTitle className="text-[10px] font-black uppercase text-white/40 tracking-widest">Rejected Apps</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
-                   <p className="text-2xl font-black text-primary">04</p>
+                   <p className="text-3xl font-black text-red-500">{loans.filter(l => l.status === 'REJECTED').length}</p>
                 </CardContent>
              </Card>
-             <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
+             <Card className="border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
                 <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-[10px] font-black uppercase text-muted-foreground">Verified (MTD)</CardTitle>
+                  <CardTitle className="text-[10px] font-black uppercase text-white/40 tracking-widest">Verified (MTD)</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">
-                   <p className="text-2xl font-black text-primary">28</p>
+                   <p className="text-3xl font-black text-primary">28</p>
                 </CardContent>
              </Card>
           </div>
@@ -118,40 +145,10 @@ export default function DfoOfficerVerifyPage() {
           />
         </div>
 
-        <div className="space-y-6">
-          <Alert className="bg-primary/5 border-primary/20">
-            <Info className="h-4 w-4 text-primary" />
-            <AlertTitle className="text-xs font-black uppercase text-primary">Officer Protocol</AlertTitle>
-            <AlertDescription className="text-xs mt-2 leading-relaxed text-foreground/70">
-              Ensure physical or digital GPS verification of the farm location is performed before issuing the verification report.
-            </AlertDescription>
-          </Alert>
-
-          <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-2">
-                <ClipboardList className="w-4 h-4" /> Checklist
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-               {[
-                 { label: "Identity Match", icon: <UserCheck className="w-3.5 h-3.5" /> },
-                 { label: "Location GPS", icon: <MapPin className="w-3.5 h-3.5" /> },
-                 { label: "Bank Reference", icon: <Landmark className="w-3.5 h-3.5" /> },
-               ].map((item, i) => (
-                 <div key={i} className="flex items-center gap-3 text-xs text-muted-foreground font-medium">
-                   <div className="w-6 h-6 rounded-md bg-accent flex items-center justify-center text-primary">
-                      {item.icon}
-                   </div>
-                   {item.label}
-                 </div>
-               ))}
-            </CardContent>
-          </Card>
-        </div>
+       
       </div>
 
-      <AlertDialog open={!!targetLoan} onOpenChange={() => setTargetLoan(null)}>
+      <AlertDialog open={!!targetLoan} onOpenChange={closeModal}>
         <AlertDialogContent className="max-w-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2 text-2xl font-black">
@@ -182,9 +179,38 @@ export default function DfoOfficerVerifyPage() {
             </CardContent>
           </Card>
 
-          <AlertDialogFooter className="mt-6">
-            <AlertDialogCancel>Mark as Incomplete</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmVerify} className="font-bold px-6">Approve & Forward to Signatory</AlertDialogAction>
+          <div className="mt-8 space-y-4">
+             <div className="flex items-center gap-2">
+                <XCircle className="w-4 h-4 text-red-500" />
+                <span className="text-xs font-bold uppercase tracking-widest text-red-500">Rejection Protocol</span>
+             </div>
+             <Textarea 
+                placeholder="Specify the reason for rejection (e.g., physical location mismatch, documentation discrepancy)..."
+                className="bg-white/5 border-white/10 text-sm min-h-[100px] rounded-2xl p-4 focus:ring-red-500/20 focus:border-red-500/50"
+                value={rejectionNote}
+                onChange={(e) => setRejectionNote(e.target.value)}
+             />
+          </div>
+
+          <AlertDialogFooter className="mt-8 gap-3 sm:gap-0">
+            <Button variant="ghost" onClick={closeModal} className="font-bold uppercase tracking-widest text-[10px] text-white/40 hover:text-white hover:bg-white/5 rounded-xl">
+              Dismiss
+            </Button>
+            <div className="flex items-center gap-3">
+              <Button 
+                variant="destructive" 
+                onClick={confirmReject}
+                className="font-black uppercase tracking-widest text-[10px] px-6 h-11 rounded-xl shadow-lg shadow-red-500/10"
+              >
+                Reject Application
+              </Button>
+              <AlertDialogAction 
+                onClick={confirmVerify} 
+                className="bg-primary text-[#001a0e] hover:bg-primary/90 font-black uppercase tracking-widest text-[10px] px-8 h-11 rounded-xl shadow-lg shadow-primary/10 m-0"
+              >
+                Approve & Forward
+              </AlertDialogAction>
+            </div>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

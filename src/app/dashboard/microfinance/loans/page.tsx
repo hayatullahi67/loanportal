@@ -4,7 +4,7 @@ import React from "react";
 import { DashboardLayout } from "@/components/shared/DashboardLayout";
 import { LoanTable } from "@/components/shared/LoanTable";
 import { useLoans } from "@/lib/store";
-import { LayoutDashboard, FilePlus, CreditCard, Plus, HelpCircle, AlertCircle, Info } from "lucide-react";
+import { LayoutDashboard, FilePlus, CreditCard, Plus, HelpCircle, AlertCircle, Info, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -34,45 +34,47 @@ export default function MicrofinanceLoansPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
-        <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
+        <Card className="border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
           <CardHeader className="pb-2">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Approval Rate</CardTitle>
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-white/40">Approval Rate</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-black text-foreground">84%</p>
-            <p className="text-[10px] text-green-600 font-bold mt-1">↑ 2.4% vs last quarter</p>
+            <p className="text-3xl font-black text-white">84%</p>
+            <p className="text-[10px] text-primary font-bold mt-1 flex items-center gap-1">
+              <ArrowUpRight className="w-2.5 h-2.5" /> 2.4% vs last quarter
+            </p>
           </CardContent>
         </Card>
-        <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
+        <Card className="border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
           <CardHeader className="pb-2">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">In-Pipeline</CardTitle>
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-white/40">In-Pipeline</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-black text-foreground">
-              {loans.filter(l => l.status !== 'DISBURSED').length}
+            <p className="text-3xl font-black text-white">
+              {loans.filter(l => l.status !== 'DISBURSED' && l.status !== 'REJECTED').length}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-1">Applications in processing</p>
+            <p className="text-[10px] text-white/40 mt-1">Processing applications</p>
           </CardContent>
         </Card>
-        <Card className="border-none shadow-sm ring-1 ring-primary/5 bg-white">
+        <Card className="border-none shadow-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-xl">
           <CardHeader className="pb-2">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Portfolio Value</CardTitle>
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-white/40">Rejected</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-black text-foreground">
-              ₦{(loans.reduce((a,c) => a+c.loan.amount, 0) / 1000000).toFixed(1)}M
+            <p className="text-3xl font-black text-red-500">
+              {loans.filter(l => l.status === 'REJECTED').length}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-1">Total value under guarantee</p>
+            <p className="text-[10px] text-white/40 mt-1">Requires attention</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className=" gap-8">
         <div className="lg:col-span-3">
           <LoanTable loans={loans} role="microfinance" />
         </div>
 
-        <div className="space-y-6">
+        {/* <div className="space-y-6">
           <Alert className="bg-primary/5 border-primary/20">
             <Info className="h-4 w-4 text-primary" />
             <AlertTitle className="text-xs font-black uppercase text-primary">Compliance Hub</AlertTitle>
@@ -112,7 +114,7 @@ export default function MicrofinanceLoansPage() {
               <p className="text-sm font-bold leading-snug">The Q2 reporting window closes in 5 days. Ensure all disbursements are updated.</p>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </DashboardLayout>
   );
